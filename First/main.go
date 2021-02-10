@@ -1,31 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/Go-Microservice/handlers"
 )
 
 //function handler and path("") displays input
 func main() {
-	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-		log.Println("Building For Next Billion Users")
-		// read the body
-		d, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(rw, "Oops Unable to read request body", http.StatusBadRequest)
-			return
-		}
-		// write the response
-		fmt.Fprintf(rw, "Hello %s", d)
-	})
+	l := log.New(os.Stdout, "product-api", log.LstdFlags)
+	hh := handlers.NewHello(l) //reference to the new handler
+	gh := handlers.Goodbye(l)
 
-	// any other request will be handled by this function
-	http.HandleFunc("/goodbye", func(rw http.ResponseWriter, r *http.Request) {
-		log.Println("Goodbye World - Running Hello Handler")
-
-	})
+	//new servemux and implements handler interface
+	sm := http.NewServeMux()
+	sm.Handle("/", hh)
 
 	// Listen for connections on all ip addresses (0.0.0.0)
 	// port 9090
