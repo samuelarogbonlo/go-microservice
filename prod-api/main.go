@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Go-Microservice/handlers"
+	"github.com/samuelarogbonlo/Go-Microservice/prod-api/handlers"
 )
 
 //function handler and path("") displays input
