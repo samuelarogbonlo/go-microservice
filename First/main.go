@@ -9,18 +9,16 @@ import (
 
 //function handler and path("") displays input
 func main() {
-	http.HandleFunc("/", func(http.ResponseWriter, *http.Request) {
+	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		log.Println("Building For Next Billion Users")
 		// read the body
 		d, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Println("Error reading body", err)
-
-			http.Error(rw, "Unable to read request body", http.StatusBadRequest)
+			http.Error(rw, "Oops Unable to read request body", http.StatusBadRequest)
 			return
 		}
 		// write the response
-		fmt.Fprintf(rw, "Hello %s", b)
+		fmt.Fprintf(rw, "Hello %s", d)
 	})
 
 	// any other request will be handled by this function
